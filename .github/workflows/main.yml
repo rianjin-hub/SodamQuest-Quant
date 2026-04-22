@@ -10,6 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # --- [여기에 추가] ---
+    env:
+      TZ: Asia/Seoul
+    # ---------------------
+
     steps:
     # 경고 해결: checkout@v4로 업데이트
     - name: Checkout code
