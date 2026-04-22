@@ -1,0 +1,13 @@
+# 보안 파일 (절대 업로드 금지)
+credentials.json
+token.json
+service_account_key.json
+
+# 가상 환경 및 캐시
+venv/
+__pycache__/
+*.pyc
+
+# 로컬 생성 엑셀 데이터
+output/
+*.xlsx
