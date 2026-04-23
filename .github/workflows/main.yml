@@ -32,7 +32,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas finance-datareader requests openpyxl google-api-python-client google-auth-httplib2 google-auth-oauthlib schedule
 
-    - name: Create Auth Files from Secrets
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # 아래 줄에 yfinance가 정확히 들어갔는지 확인하세요!
+        pip install pandas finance-datareader yfinance requests openpyxl google-api-python-client google-auth-httplib2 google-auth-oauthlib
+        
+        - name: Create Auth Files from Secrets
       run: |
         echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > credentials.json
         echo "${{ secrets.GCP_TOKEN }}" | base64 --decode > token.json
