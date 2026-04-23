@@ -31,15 +31,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas finance-datareader yfinance requests openpyxl google-api-python-client google-auth-httplib2 google-auth-oauthlib schedule
 
-    # [수정완료] 줄맞춤(Indentation) 에러 복구
+    # [수정] 환경변수(env)로 JSON 데이터를 안전하게 감싸서 파일로 추출하고, 용량을 검증합니다.
     - name: Create Auth Files from Secrets
+      env:
+        CRED_JSON: ${{ secrets.GCP_CREDENTIALS }}
+        TOKEN_JSON: ${{ secrets.GCP_TOKEN }}
       run: |
-        cat << 'EOF' > credentials.json
-        ${{ secrets.GCP_CREDENTIALS }}
-        EOF
-        cat << 'EOF' > token.json
-        ${{ secrets.GCP_TOKEN }}
-        EOF
+        echo "$CRED_JSON" > credentials.json
+        echo "$TOKEN_JSON" > token.json
+        echo "=== [시스템 증거] 생성된 인증 파일 용량 검증 ==="
+        ls -l *.json
 
     # 파이프라인 가동 (1차 스크리닝 -> 60분봉 타점 분석 -> 구글 드라이브 업로드)
     - name: Run Pipeline (Step 4 & 5 & 7)
