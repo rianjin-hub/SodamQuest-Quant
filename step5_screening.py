@@ -144,31 +144,11 @@ def run_quantum_hunter_screening():
         view_cols = ['종목명', '현재가', '등락률', 'V3.2 판정', 'V3.2 요약']
         print(final_passed_df[view_cols].to_string(index=False))
 
-    # [수정] 합격/불합격 상관없이 94개 전체 결과를 엑셀로 저장하여 직접 눈으로 검증!
-    output_filename = latest_file.replace('.xlsx', '_V3.2_Tested.xlsx')
+    # [수정] 94개 전체 결과를 엑셀로 저장
+    output_filename = latest_file.replace('.xlsx', '_V3.2_Master_Report.xlsx')
     target_df.to_excel(output_filename, index=False)
-    print(f"\n[시스템] 94개 종목의 V3.2 분석 디버깅 리포트가 저장되었습니다: {os.path.basename(output_filename)}")
-
-    # ------------------------------------------
-    # 5. 최종 결과 출력 및 저장
-    # ------------------------------------------
-    print("=== [최종] V3.2 초단기 타점 분석 결과 (조건 부합 종목) ===")
+    print(f"\n[시스템] V3.2 전체 분석 마스터 리포트가 저장되었습니다: {os.path.basename(output_filename)}")
     
-    # '조건 부합'인 종목만 필터링
-    final_passed_df = target_df[target_df['V3.2 판정'] == '조건 부합'].copy()
-
-    if final_passed_df.empty:
-        print(" -> [!] 오늘은 V3.2 60분봉 초단기 타점(RSI 과열 해소 & OBV 상승)에 부합하는 종목이 없습니다.")
-    else:
-        view_cols = ['종목명', '현재가', '등락률', 'V3.2 판정', 'V3.2 요약']
-        print(final_passed_df[view_cols].to_string(index=False))
-
-    # [중요] step7에서 업로드할 수 있도록 결과를 다시 엑셀로 저장 (덮어쓰기 또는 새 파일)
-    # 기존 파일 이름 끝에 '_V3.2_Filtered'를 붙여서 저장
-    output_filename = latest_file.replace('.xlsx', '_V3.2_Filtered.xlsx')
-    final_passed_df.to_excel(output_filename, index=False)
-    print(f"\n[시스템] V3.2 최종 분석 결과가 저장되었습니다: {os.path.basename(output_filename)}")
-
 # ==========================================
 # 4. 실행부
 # ==========================================
